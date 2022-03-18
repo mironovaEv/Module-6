@@ -55,10 +55,25 @@ window.onload = function() {
 
     }
     document.querySelector("#walls").onclick = function() {
+        var n = document.getElementById('map_size').value;
+        for (let i = 0; i < n * n; i++) {
+            let sqr = document.getElementById(i);
+            if (sqr.style.background == "yellow") {
+                sqr.style.background = "white";
+            }
+        }
         let elms = document.getElementsByClassName('gridCell');
 
         for (let i in elms) {
-            elms[i].onclick = function() { this.style.background = 'black' };
+
+            elms[i].onclick = function() {
+                if (this.style.background == 'black') {
+                    this.style.background = 'white'
+
+                } else {
+                    this.style.background = 'black'
+                };
+            }
         }
     }
     var count = 0;
@@ -66,9 +81,9 @@ window.onload = function() {
     document.querySelector("#start_finish").onclick = function() {
         count = 0;
         var n = document.getElementById('map_size').value;
-        for (var i = 0; i < n*n; i++){
+        for (var i = 0; i < n * n; i++) {
             var sqr = document.getElementById(i);
-            if (sqr.style.background == "yellow"){
+            if (sqr.style.background == "yellow") {
                 sqr.style.background = "white";
             }
         }
@@ -186,18 +201,20 @@ window.onload = function() {
             if (best_prior_ind == -1) {
                 document.getElementById('ez_text').textContent = "Путь не найден :("
                 document.getElementById('ez2').style.visibility = 'visible';
+                document.getElementById('ez').style.visibility = 'hidden';
                 document.getElementById('ez_text').style.color = 'red';
                 return
             } else if (best_prior_ind == finish) {
                 document.getElementById('ez_text').textContent = "Путь найден!"
                 document.getElementById('ez').style.visibility = 'visible';
+                document.getElementById('ez2').style.visibility = 'hidden';
                 document.getElementById('ez_text').style.color = 'green';
 
                 let way = [];
                 for (var k = prev[finish]; k != start; k = prev[k]) {
                     way.push(k)
                 };
-                for (let i = 0; i < way.length; i++){
+                for (let i = 0; i < way.length; i++) {
                     let vertex = document.getElementById(way[i]);
                     vertex.style.background = "yellow";
                 }

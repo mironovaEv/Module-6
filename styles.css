@@ -150,3 +150,8 @@ a:active {
     font-size: 35px;
     font-family:Comic Sans MS ;
 }
+#ez_gif{
+    margin-top: 100px;
+    max-width: 200px;
+    max-height: 200px;
+}
