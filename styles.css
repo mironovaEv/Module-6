@@ -4,8 +4,9 @@ body {
 
 h1 {
     color: #98b1f9;
-    font-family: Comic Sans MS;
+    font-family: Comic Sans MS, serif;
     font-size: 50px;
+    text-align: center;
 }
 
 .first_alg {
@@ -19,9 +20,8 @@ a {
     border-radius: 10px;
     color: black;
     font-size: 20px;
-    font-family: Comic Sans MS;
-    margin: 0 auto;
-    margin-bottom: 30px;
+    font-family: Comic Sans MS, serif;
+    margin: 0 auto 30px;
     display: block;
     border: none;
     text-decoration: none;
@@ -32,12 +32,12 @@ a {
 }
 
 a:hover {
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     background: #d3e3fd;
 }
 
 a:active {
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
     background: #c4ddff;
 }
 
@@ -53,7 +53,7 @@ a:active {
 .map-size_label {
     display: block;
     margin-bottom: 0.25rem;
-    font-family: Comic Sans MS;
+    font-family: Comic Sans MS, serif;
     text-align: center;
 }
 
@@ -73,12 +73,12 @@ a:active {
 .map-size_input:focus {
     border: 1px solid cadetblue;
     outline: 0;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 
 }
 
 .create-map {
-    font-family: Comic Sans MS;
+    font-family: Comic Sans MS, serif;
     background: #CADEFC;
     border-radius: 10px;
     color: black;
@@ -95,12 +95,12 @@ a:active {
 }
 
 .create-map:hover {
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     background: #d3e3fd;
 }
 
 .create-map:active {
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
     background: #c4ddff;
 }
 
@@ -111,7 +111,7 @@ a:active {
     min-width: 500px;
 }
 
-#container>.gridCell {
+#container > .gridCell {
     float: left;
     padding: 0;
     margin: 0;
@@ -120,7 +120,7 @@ a:active {
     border-radius: 20%;
 }
 
-#container>.gridCell {
+#container > .gridCell {
     background: white;
     cursor: pointer;
 }
@@ -135,23 +135,76 @@ a:active {
 .map {
     margin-left: 20%;
 }
-.ez{
+
+.ez {
     max-height: 75px;
     max-width: 100px;
     visibility: hidden;
 }
-.ez_div{
+
+.ez_div {
     display: flex;
 }
-.text{
-    margin: 0 auto;
-    margin-top: 20px;
+
+.text {
+    margin: 20px auto 0;
     vertical-align: middle;
     font-size: 35px;
-    font-family:Comic Sans MS ;
+    font-family: Comic Sans MS, serif;
 }
-#ez_gif{
+
+#ez_gif {
     margin-top: 100px;
     max-width: 200px;
     max-height: 200px;
+}
+
+.grass {
+    width: 600px;
+    height: 600px;
+    margin-top: 5%;
+    background: darkseagreen;
+    border-radius: 20px;
+    position: relative;
+}
+
+.grass_div {
+    margin: 0 auto;
+    width: 600px;
+
+
+}
+
+.grass_buttons {
+    margin-top: 10px;
+    display: flex;
+}
+
+.canvas {
+    position: absolute;
+}
+
+.bee_div {
+    display: flex;
+}
+
+#spring_bee {
+    max-height: 300px;
+    margin-top: 350px;
+    transform: scale(-1, 1);
+}
+
+#minecraft_bee {
+    max-width: 204px;
+    max-height: 204px;
+    margin-top: 50px;
+}
+
+#clean {
+    width: 70px;
+    margin-bottom: -30px;
+    background: lightcoral;
+    color: white;
+    margin-left: 520px;
+
 }

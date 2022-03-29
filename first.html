@@ -1,41 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Первый алгоритм</title>
+    <title>А*</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
+    <script src="scr/script_for_first.js"></script>
 </head>
 
 <body>
-    <div class="first_alg">
-        <div class="map-size">
-            <label class="map-size_label" for="size">Введите размер поля<br>
-                (от 2 до 50)</label>
-            <input id="map_size" class="map-size_input" type="int" name="size" min="2" max="50"></input>
-            <div>
-                <button type="submit" class="create-map" id="submit">Сгенерировать поле</button>
-            </div>
-            <img src="img/ez_gif.gif" id="ez_gif">
+<div class="first_alg">
+    <div class="map-size">
+        <label class="map-size_label" for="map_size">Введите размер поля<br>
+            (от 2 до 50)</label>
+        <input id="map_size" class="map-size_input" type="text" name="size" min="2" max="50"/>
+        <div>
+            <button type="submit" class="create-map" id="submit">Сгенерировать поле</button>
         </div>
-        <div class="map">
-            <div class="ez_div">
-                <img src="img/ez.png" class="ez" id="ez">
-                <h3 class="text" id="ez_text"></h3>
-                <img src="img/ez2.png" class="ez" id="ez2">
-            </div>
-
-            <div id="container">
-            </div>
-            <div class="start-finish">
-                <button class="create-map" id="walls">Разместить стены</button>
-                <button class="create-map" id="start_finish">Отметить начало и конец</button>
-            </div>
-            <button class="create-map" id="create_way">Найти путь</button>
-        </div>
+        <img src="img/ez_gif.gif" id="ez_gif" alt="">
     </div>
+    <div class="map">
+        <div class="ez_div">
+            <img src="img/ez.png" class="ez" id="ez" alt="">
+            <h3 class="text" id="ez_text"></h3>
+            <img src="img/ez2.png" class="ez" id="ez2" alt="">
+        </div>
+
+        <div id="container">
+        </div>
+        <div class="start-finish">
+            <button class="create-map" id="walls">Разместить стены</button>
+            <button class="create-map" id="start_finish">Отметить начало и конец</button>
+        </div>
+        <button class="create-map" id="create_way">Найти путь</button>
+    </div>
+</div>
 </body>
 
 </html>
