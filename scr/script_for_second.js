@@ -3,12 +3,13 @@ var inputArea = document.getElementById("input-area");
 var showCenters = document.getElementById("show-cluster-centers");
 var placePointsButton = document.getElementById("place-points");
 var eraserButton = document.getElementById("eraser");
+var method = document.getElementById("method");
 var eraseMode = false;
 var pointIndex = 0;
 
 placePointsButton.style.transform = "scale(1.3)";
 
-document.getElementById("run-button").onclick = kMeans;
+document.getElementById("run-button").onclick = clusterize;
 placePointsButton.onclick = drawingModeOn;
 eraserButton.onclick = eraserModeOn;
 inputArea.onclick = drawPoint;
@@ -26,6 +27,9 @@ function drawPoint(event) {
     point.style.left = pointX + "px";
     point.style.top = pointY + "px";
     canvas.appendChild(point);
+    point.onclick = function(event) {
+        event.currentTarget.remove();
+    };
     point.onmousedown = erasePoint;
     point.onmouseup = eraseModeTrigger;
     point.onmousemove = erasePoint;
@@ -59,11 +63,11 @@ function eraseModeTrigger(event) {
 }
 
 //алгоритм кластеризации методом К-средних
-function kMeans() {
+function clusterize () {
     console.clear();
 
     let points = inputCoord();  //массив объектов точек
-    let clusters = [];  //массив кластеров
+    let KMclusters = [];  //массив кластеров
     let k = document.getElementById("k-value").value;  //число кластеров
     let stop = false;
     let centerNewX, centerNewY;  //координаты центра массы кластера
@@ -93,56 +97,62 @@ function kMeans() {
         let randomPoint = points[Math.floor(Math.random() * points.length)];
         if (k / points.length <= 0.25) {
             for (let j = i - 1; j >= 0; j--) {
-                if (randomPoint == clusters[j].center) {
+                if (randomPoint == KMclusters[j].center) {
                     randomPoint = points[Math.floor(Math.random() * points.length)];
                     j = i;
                 }
             }
         }
-        clusters.push(new cluster(Object.assign({}, randomPoint)));
+        KMclusters.push(new KMcluster(Object.assign({}, randomPoint)));
     }
 
     console.log("[PHASE 0][Random cluster centers]");
-    for (let i in clusters) {
-        console.log(i + ":", clusters[i].center.index);
+    for (let i in KMclusters) {
+        console.log(i + ":", KMclusters[i].center.index);
     }
 
     while(!stop) {
         for (let i in points) {
-            points[i].cluster = closestCenter(clusters, k, points[i]);
-            clusters[points[i].cluster].numberOfPoints++;
-            clusters[points[i].cluster].xSum += points[i].x;
-            clusters[points[i].cluster].ySum += points[i].y;
-
-            document.getElementById(points[i].index).style.backgroundColor = `hsl(${clusterColor(points[i].cluster, k)}, 100%, 50%)`;
+            points[i].KMcluster = closestCenter(KMclusters, k, points[i]);
+            KMclusters[points[i].KMcluster].numberOfPoints++;
+            KMclusters[points[i].KMcluster].xSum += points[i].x;
+            KMclusters[points[i].KMcluster].ySum += points[i].y;
         }
         stop = true;
-        for (let i in clusters) {
-            if (clusters[i].numberOfPoints) {
-                centerNewX = clusters[i].xSum / clusters[i].numberOfPoints;
-                centerNewY = clusters[i].ySum / clusters[i].numberOfPoints;
-                if (centerNewX == clusters[i].center.x && centerNewY == clusters[i].center.y) {
+        for (let i in KMclusters) {
+            if (KMclusters[i].numberOfPoints) {
+                centerNewX = KMclusters[i].xSum / KMclusters[i].numberOfPoints;
+                centerNewY = KMclusters[i].ySum / KMclusters[i].numberOfPoints;
+                if (centerNewX == KMclusters[i].center.x && centerNewY == KMclusters[i].center.y) {
                     stop = stop && true;
                 } else {
                     stop = false;
                 }
-                clusters[i].center.x = centerNewX;
-                clusters[i].center.y = centerNewY;
-                clusters[i].numberOfPoints = 0;
-                clusters[i].xSum = 0;
-                clusters[i].ySum = 0;
+                KMclusters[i].center.x = centerNewX;
+                KMclusters[i].center.y = centerNewY;
+                KMclusters[i].numberOfPoints = 0;
+                KMclusters[i].xSum = 0;
+                KMclusters[i].ySum = 0;
             }
         }
 
         console.log("[NEXT PHASE][Closest cluster center]");
         for (let i in points) {
-            console.log(points[i].x, points[i].y, "->", points[i].cluster);
+            console.log(points[i].x, points[i].y, "->", points[i].KMcluster);
         }
 
         console.log("[Clusters new center of mass]");
-        for (let i in clusters) {
-            console.log(i + ":", clusters[i].center.x, clusters[i].center.y);
+        for (let i in KMclusters) {
+            console.log(i + ":", KMclusters[i].center.x, KMclusters[i].center.y);
         }
+    }
+
+    displayChanges(points, KMclusters, k);
+}
+
+function displayChanges(points, KMclusters, k) {
+    for (let i in points) {
+        document.getElementById(points[i].index).style.backgroundColor = `hsl(${clusterColor(points[i].KMcluster, k)}, 100%, 50%)`;
     }
 
     while (document.getElementById("clusterCenter")) {
@@ -150,13 +160,13 @@ function kMeans() {
     }
 
     if (showCenters.checked) {
-        for (let i in clusters) {
+        for (let i in KMclusters) {
             let clusterCenter = document.createElement("div");
             clusterCenter.className = "clusterCenter";
             clusterCenter.id = "clusterCenter";
             clusterCenter.style.borderColor = `hsl(${clusterColor(i, k)}, 100%, 50%)`;
-            clusterCenter.style.left = `${clusters[i].center.x - 7}px`;
-            clusterCenter.style.top = `${clusters[i].center.y - 6}px`;
+            clusterCenter.style.left = `${KMclusters[i].center.x - 8}px`;
+            clusterCenter.style.top = `${KMclusters[i].center.y - 7}px`;
             canvas.appendChild(clusterCenter);
         }
     }
@@ -181,10 +191,10 @@ function dist(pointA, pointB) {
 }
 
 //ближайший центр кластера к точке
-function closestCenter(clusters, k, point) {
+function closestCenter(KMclusters, k, point) {
     let min = 0;
     for (let i = 1; i < k; i++) {
-        if (dist(point, clusters[i].center) < dist(point, clusters[min].center)) {
+        if (dist(point, KMclusters[i].center) < dist(point, KMclusters[min].center)) {
             min = i;
         }
     }
@@ -197,15 +207,16 @@ function clusterColor(cluster, k) {
 }
 
 //конструктор объекта точки
-function point(index, x, y, cluster = 0) {
+function point(index, x, y, KMcluster = 0, label = undefined) {
     this.index = index;
     this.x = x;
     this.y = y;
-    this.cluster = cluster;
+    this.KMcluster = KMcluster;
+    this.label;
 }
 
 //конструктор объекта кластера
-function cluster(center, numberOfPoints = 0, xSum = 0, ySum = 0) {
+function KMcluster(center, numberOfPoints = 0, xSum = 0, ySum = 0) {
     this.center = center;
     this.numberOfPoints = numberOfPoints;
     this.xSum = xSum;
