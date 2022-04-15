@@ -162,7 +162,7 @@ a:active {
 .grass {
     width: 600px;
     height: 600px;
-    margin-top: 5%;
+    margin-top: 10px;
     background: darkseagreen;
     border-radius: 20px;
     position: relative;
@@ -202,9 +202,59 @@ a:active {
 
 #clean {
     width: 70px;
-    margin-bottom: -30px;
+    background: lightcoral;
+    color: white;
+    margin-left: 140px;
+    margin-top: 10px;
+
+
+}
+
+#clean2 {
+    width: 70px;
     background: lightcoral;
     color: white;
     margin-left: 520px;
+    margin-top: 5px;
 
+
+}
+
+.path_found {
+    color: lightgreen;
+    font-family: Comic Sans MS, serif;
+    margin-left: 150px;
+    visibility: hidden;
+    margin-top: -5px;
+}
+
+.top_panel {
+    max-height: 50px;
+    font-size: 30px;
+    display: flex;
+}
+
+.ants {
+    display: flex;
+}
+
+#ant {
+    height: 20%;
+    width: 20%;
+    margin-top: 400px;
+    transform: scale(-1, 1);
+}
+
+#ant2 {
+    max-width: 300px;
+    max-height: 230px;
+    margin-top: 250px;
+}
+
+#line {
+    width: 150%;
+    height: 50%;
+    transform: scale(-1, 1);
+    margin-right: -200px;
+    margin-top: -220px;
 }

@@ -5,7 +5,7 @@ window.onload = function () {
     document.querySelector("#place_point").onclick = function () {
         const grass = document.getElementById('grass');
 
-        grass.addEventListener('mouseup', function (e) {
+        canvas.addEventListener('mouseup', function (e) {
             let x = e.pageX - grass.offsetLeft,
                 y = e.pageY - grass.offsetTop;
             flowers.push([x, y])
@@ -25,6 +25,7 @@ window.onload = function () {
 
     }
     document.querySelector("#create_way").onclick = function () {
+        document.getElementById('path_found').style.visibility = 'hidden'
         let distances = []
         for (let i = 0; i < flowers.length; i++) {
             distances[i] = []
@@ -95,16 +96,8 @@ window.onload = function () {
 
 
         function crossing(population) {
-            let second_individual_ind = -1
-            let first_individual_ind = Math.floor(Math.random() * population.length)
-            while (second_individual_ind === -1) {
-                let ind = Math.floor(Math.random() * population.length)
-                if (ind !== first_individual_ind) {
-                    second_individual_ind = ind
-                }
-            }
-            let first_individual = population[first_individual_ind]
-            let second_individual = population[second_individual_ind]
+            let first_individual = population[0]
+            let second_individual = population[1]
             let break_point = Math.round(((first_individual.length) / 2))
             let first_descendant = []
             let second_descendant = []
@@ -157,14 +150,16 @@ window.onload = function () {
         }
 
         function create_population(flowers) {
-            let population_size = Math.round(flowers.length/2)
+            let population_size = flowers.length * 2
             let population = []
             while (population.length < population_size) {
                 let way = random_way(flowers.length)
                 if (population.includes(way) === false) {
-                    way.unshift(fitness(way))
                     population.push(way)
                 }
+            }
+            for (let i = 0; i < population_size; i++) {
+                population[i].unshift(fitness(population[i]))
             }
             sort_population(population, 0, population.length - 1)
             return population
@@ -175,7 +170,7 @@ window.onload = function () {
             let best_way = -1
 
             async function find_way() {
-                for (let i = 0; i < Math.pow(flowers.length, 3); i++) {
+                for (let i = 0; i < Math.pow(flowers.length, 4); i++) {
                     ctx.beginPath();
                     crossing(population)
                     for (let j = 0; j < population.length; j++) {
@@ -185,7 +180,6 @@ window.onload = function () {
                     if (population[0][0] !== best_way) {
                         best_way = population[0][0]
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        const wes = document.getElementById('wes')
                         let start_x = flowers[population[0][1]][0]
                         let start_y = flowers[population[0][1]][1]
                         ctx.moveTo(start_x, start_y)
@@ -197,9 +191,10 @@ window.onload = function () {
                         ctx.closePath();
                         ctx.strokeStyle = '#1a2edb'
                         ctx.stroke();
-                        await new Promise(r => setTimeout(r, 100));
+                        await new Promise(r => setTimeout(r, 25));
                     }
                 }
+                document.getElementById('path_found').style.visibility = 'visible';
 
 
             }
@@ -209,12 +204,13 @@ window.onload = function () {
         }
 
     }
-    document.querySelector('#clean').onclick = function (){
+    document.querySelector('#clean').onclick = function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        document.querySelectorAll('.flowers').forEach(function(a){
+        document.querySelectorAll('.flowers').forEach(function (a) {
             a.remove()
         })
         flowers = []
+        document.getElementById('path_found').style.visibility = 'hidden'
     }
 
 
