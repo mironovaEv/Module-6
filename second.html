@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Алгоритм кластеризации</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="second.css">
+    </head>
+
+    <body>
+        <main class="main">
+            <hr><h4>Метод K-средних</h4>
+            <label class="input-caption">Число кластеров (k)</label>
+            <input id="k-value" class="number-input" type="number" min="1" value="1"><br>
+            <label class="input-caption">Отображать центры масс кластеров</label>
+            <input id="show-cluster-centers" type="checkbox">
+            <hr><h4>Метод DBSCAN</h4>
+            <label class="input-caption">Минимальный размер кластера (&epsilon;)</label>
+            <input id="epsilon" class="range-input" type="range" min="1" value="60" max="200" step="1"><br>
+            <label class="input-caption">Минимальное число точек для образования кластера (minPts)</label>
+            <input id="minPts" class="number-input" type="number" min="1" value="4"><br>
+            <label class="input-caption">Отображать &epsilon;-окресности точек</label>
+            <input id="show-eps" type="checkbox">
+            <hr>
+
+            <div class="input-window">
+                <div class="tools">
+                    <button id="run-button" class="run-button" type="submit">Запустить кластеризацию</button>
+                    <select id="method" class="method-select">
+                        <option value="k-means">Метод К-средних</option>
+                        <option value="dbscan" selected>DBSCAN</option>
+                    </select>
+                    <button id="place-points" class="cursor-type-button"><img class="cursor-icon" src="img/reticle.bmp"></button>
+                    <button id="eraser" class="cursor-type-button"><img class="cursor-icon" src="img/eraser.bmp"></button>
+                </div>
+                <div id="canvas" class="canvas">
+                    <div id="input-area" class="input-area"></div>
+                </div>
+            </div>
+        </main>
+        <script type="text/javascript" src="scr/script_for_second.js"></script>
+    </body>
+</html>
