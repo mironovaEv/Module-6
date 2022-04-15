@@ -190,7 +190,7 @@ window.onload = function () {
     }
 
 
-    document.querySelector('#clean2').onclick = function () {
+    document.querySelector('#clear2').onclick = function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         document.querySelectorAll('.points').forEach(function (a) {
             a.remove()

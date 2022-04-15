@@ -204,7 +204,7 @@ window.onload = function () {
         }
 
     }
-    document.querySelector('#clean').onclick = function () {
+    document.querySelector('#clear').onclick = function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         document.querySelectorAll('.flowers').forEach(function (a) {
             a.remove()
