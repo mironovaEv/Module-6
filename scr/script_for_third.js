@@ -191,7 +191,7 @@ window.onload = function () {
                         ctx.closePath();
                         ctx.strokeStyle = '#1a2edb'
                         ctx.stroke();
-                        await new Promise(r => setTimeout(r, 25));
+                        await new Promise(r => setTimeout(r, 50));
                     }
                 }
                 document.getElementById('path_found').style.visibility = 'visible';
